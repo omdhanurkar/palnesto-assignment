@@ -27,12 +27,13 @@ const isVAlidEmail = function (email) {
 
 
 const isValidPassword = function (pass) {
-    return /^.{8,15}$/.test(pass);
+    return /^.{6,15}$/.test(pass);
 };
 
 
 module.exports = {
     isValid,
+    isValidRequestBody,
     isValidname,
     isValidPassword,
     isVAlidEmail

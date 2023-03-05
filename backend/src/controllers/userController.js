@@ -2,15 +2,14 @@ const userModel = require("../models/userModel")
 const check = require("../utils/validator")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
-const { uploadFile } = require("./awsController")
 
 
 //=====================================CREATE USER===============================================================
 
-const createUser = async function (req, res) {
+const createUser = async (req, res) => {
     try {
         const data = req.body
-        if (!check.isValidRequestBody(data)) { return res.status(400).send({ status: false, message: "Please enter data to create user" }) }
+         if (!check.isValidRequestBody(data)) { return res.status(400).send({ status: false, message: "Please enter data to create user" }) }
 
         let { name, email, password } = data
 
@@ -25,7 +24,7 @@ const createUser = async function (req, res) {
 
         if (!password) { return res.status(400).send({ status: false, message: "Password is mandatory" }) };
         if (!check.isValidPassword(password)) { return res.status(400).send({ status: false, message: "Password should be valid" }) };
-        const encryptedPassword = await bcrypt.hash(password, 10)     
+        const encryptedPassword = await bcrypt.hash(password, 10)
 
         const userDetails = { name, email, password: encryptedPassword }
 
@@ -39,7 +38,7 @@ const createUser = async function (req, res) {
 
 //======================================LOGIN USER===============================================================
 
-const userLogin = async function (req, res) {
+const userLogin = async (req, res) => {
     try {
 
         let data = req.body
@@ -60,7 +59,7 @@ const userLogin = async function (req, res) {
         }
 
         // check password of existing user
-        let pass = await bcrypt.compare(password, user.password)      
+        let pass = await bcrypt.compare(password, user.password)
         if (!pass) return res.status(400).send({ status: false, message: "Password is not correct, Please provide valid password" });
 
         // using jwt for creating token
