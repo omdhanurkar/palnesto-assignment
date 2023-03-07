@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken")
 const createUser = async (req, res) => {
     try {
         const data = req.body
+        console.log(data)
          if (!check.isValidRequestBody(data)) { return res.status(400).send({ status: false, message: "Please enter data to create user" }) }
 
         let { name, email, password } = data
@@ -27,6 +28,7 @@ const createUser = async (req, res) => {
         const encryptedPassword = await bcrypt.hash(password, 10)
 
         const userDetails = { name, email, password: encryptedPassword }
+
 
         const newUser = await userModel.create(userDetails);
         return res.status(201).send({ status: true, message: "User created successfully", data: newUser });
